@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import { defaultLaborConfig } from '../data/laborDefaults';
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import {
@@ -162,7 +163,7 @@ export const VehicleDispatchSettlement: React.FC<VehicleDispatchSettlementProps>
   // Forzar sincronización manual de todas las salidas locales hacia Cloud Firestore
   const handleForceSyncDispatches = async () => {
     if (!isFirebaseConnected) {
-      alert("No hay conexión con Firebase. Conéctate primero desde el botón de Firebase en la barra superior.");
+      toast.error('No hay conexión con Firebase. Conéctate primero desde el botón de Firebase en la barra superior.');
       return;
     }
     setIsManualSyncing(true);
@@ -724,7 +725,7 @@ export const VehicleDispatchSettlement: React.FC<VehicleDispatchSettlementProps>
   const handleCreateDispatch = (e: React.FormEvent) => {
     e.preventDefault();
     if (hasBusyResource) {
-      alert('No es posible despachar: Uno o más recursos (camión, conductor o auxiliar) ya se encuentran en una ruta activa sin retornar al CEDI.');
+      toast.error('No es posible despachar: Uno o más recursos (camión, conductor o auxiliar) ya se encuentran en una ruta activa sin retornar al CEDI.');
       return;
     }
     const route = routes.find(r => r.id === newDispatchForm.routeId) || routes[0];
@@ -4617,7 +4618,7 @@ export const VehicleDispatchSettlement: React.FC<VehicleDispatchSettlementProps>
 
           saveDispatches(updatedDispatches);
           setShowCloseYearModal(false);
-          alert(`Año ${currentYear} cerrado exitosamente. Se archivaron ${yearDispatches.length} despachos con sus precios históricos preservados.`);
+          toast.success(`Año ${currentYear} cerrado exitosamente. Se archivaron ${yearDispatches.length} despachos con sus precios históricos preservados.`);
         }}
         title="Cierre de Año"
         confirmText="Confirmar Cierre de Año"

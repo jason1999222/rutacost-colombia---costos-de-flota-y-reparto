@@ -1,3 +1,4 @@
+import { Toaster } from 'sonner';
 import { FinancialReportModal } from './components/FinancialReportModal';
 import React, { useState, useMemo, lazy, Suspense } from 'react';
 import { DeliveryRoute, VehicleProfile, LaborConfig, RouteCostBreakdown, TripDispatch } from './types/logistics';
@@ -433,6 +434,8 @@ export default function App() {
   }
 
   return (
+    <>
+    <Toaster position="top-right" richColors />
     <div className="min-h-screen bg-slate-50 flex flex-col selection:bg-blue-100 selection:text-blue-900">
 
       {/* Barra de Navegación Superior con 5 Módulos Esenciales */}
@@ -829,5 +832,6 @@ export default function App() {
       />
 
     </div>
+    </>
   );
 }

@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -196,7 +197,7 @@ export const UserManagementModal: React.FC<UserManagementModalProps> = ({
       setTimeout(() => setActionSuccess(null), 3500);
       setSelectedUserToEdit(null);
     } catch (err: any) {
-      alert("Error al actualizar usuario: " + (err.message || ''));
+      toast.error(`Error al actualizar usuario:  ${err.message || ''}`);
     } finally {
       setIsSaving(false);
     }
@@ -212,7 +213,7 @@ export const UserManagementModal: React.FC<UserManagementModalProps> = ({
       setActionSuccess(`Acceso aprobado para ${user.displayName || user.email}. Ya puede ingresar.`);
       setTimeout(() => setActionSuccess(null), 3500);
     } catch (e: any) {
-      alert("Error aprobando usuario: " + (e.message || ''));
+      toast.error(`Error aprobando usuario:  ${e.message || ''}`);
     }
   };
 
@@ -224,7 +225,7 @@ export const UserManagementModal: React.FC<UserManagementModalProps> = ({
         setActionSuccess(`Acceso declinado para ${user.displayName || user.email}.`);
         setTimeout(() => setActionSuccess(null), 3500);
       } catch (e: any) {
-        alert("Error rechazando usuario: " + (e.message || ''));
+        toast.error(`Error rechazando usuario:  ${e.message || ''}`);
       }
     }
   };
@@ -232,7 +233,7 @@ export const UserManagementModal: React.FC<UserManagementModalProps> = ({
   // Eliminar usuario
   const handleDeleteUser = async (user: UserProfile) => {
     if (user.email === 'jacson.munoz@gmail.com') {
-      alert("No se puede eliminar la cuenta del Superadministrador Principal.");
+      toast.error('No se puede eliminar la cuenta del Superadministrador Principal.');
       return;
     }
     if (confirm(`¿Deseas eliminar definitivamente de Firestore la cuenta de ${user.displayName || user.email}?`)) {
@@ -241,7 +242,7 @@ export const UserManagementModal: React.FC<UserManagementModalProps> = ({
         setActionSuccess(`Usuario ${user.displayName || user.email} eliminado.`);
         setTimeout(() => setActionSuccess(null), 3500);
       } catch (e: any) {
-        alert("Error eliminando usuario: " + (e.message || ''));
+        toast.error(`Error eliminando usuario:  ${e.message || ''}`);
       }
     }
   };

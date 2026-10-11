@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import { defaultLaborConfig } from '../data/laborDefaults';
 import React, { useState, useEffect } from 'react';
 import {
@@ -703,7 +704,7 @@ export const CalculationBasisConfig: React.FC<CalculationBasisConfigProps> = ({
   const handleAddNewHoliday = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newHolidayForm.date || !newHolidayForm.name.trim()) {
-      alert('Por favor ingresa la fecha y el nombre del día festivo.');
+      toast.error('Por favor ingresa la fecha y el nombre del día festivo.');
       return;
     }
 

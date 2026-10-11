@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { DeliveryRoute, VehicleProfile, LaborConfig } from '../types/logistics';
 import { GeoCoord, CEDI_CALDAS, COLOMBIA_LOCATIONS } from '../data/colombiaCoordinates';
@@ -588,7 +589,7 @@ export const RouteFormModal: React.FC<RouteFormModalProps> = ({
   // Eliminar una parada (si se elimina la salida y quedan suficientes, la siguiente se convierte en salida)
   const handleRemoveStop = (index: number) => {
     if (stops.length <= 2) {
-      alert('Una ruta debe contener al menos un punto de salida y un destino.');
+      toast.error('Una ruta debe contener al menos un punto de salida y un destino.');
       return;
     }
     setStops(prev => {
@@ -701,7 +702,7 @@ export const RouteFormModal: React.FC<RouteFormModalProps> = ({
     e.preventDefault();
     if (!name.trim()) return;
     if (stops.length < 2) {
-      alert('Debes agregar al menos un punto de destino para crear la ruta.');
+      toast.error('Debes agregar al menos un punto de destino para crear la ruta.');
       return;
     }
 

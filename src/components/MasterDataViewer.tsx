@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import { defaultLaborConfig } from '../data/laborDefaults';
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import {
@@ -522,7 +523,7 @@ export const MasterDataViewer: React.FC<MasterDataViewerProps> = ({
   const handleSaveStoreSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!storeForm.id.trim() || !storeForm.name.trim()) {
-      alert('Ingresa el código y el nombre del punto de entrega.');
+      toast.error('Ingresa el código y el nombre del punto de entrega.');
       return;
     }
 
@@ -557,7 +558,7 @@ export const MasterDataViewer: React.FC<MasterDataViewerProps> = ({
 
   const handleDeleteStore = async (storeId: string, storeName: string) => {
     if (storeId === 'L-000') {
-      alert('El CEDI Caldas - Portal Industrial del Sur es el origen logístico principal de SCJ y no se puede eliminar.');
+      toast.error('El CEDI Caldas - Portal Industrial del Sur es el origen logístico principal de SCJ y no se puede eliminar.');
       return;
     }
     if (window.confirm(`¿Seguro que deseas eliminar la tienda "${storeName}" (${storeId}) de la base de datos y Firestore?`)) {
@@ -843,7 +844,7 @@ export const MasterDataViewer: React.FC<MasterDataViewerProps> = ({
   const handleSaveStaff = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!staffForm.name.trim() || !staffForm.document.trim()) {
-      alert('Ingresa el nombre completo y número de cédula.');
+      toast.error('Ingresa el nombre completo y número de cédula.');
       return;
     }
 
@@ -971,7 +972,7 @@ export const MasterDataViewer: React.FC<MasterDataViewerProps> = ({
     e.preventDefault();
     const cleanPlate = fleetForm.plate.trim().toUpperCase();
     if (!cleanPlate || !fleetForm.name.trim()) {
-      alert('Ingresa la placa y el nombre del camión.');
+      toast.error('Ingresa la placa y el nombre del camión.');
       return;
     }
 
@@ -1066,7 +1067,7 @@ export const MasterDataViewer: React.FC<MasterDataViewerProps> = ({
   const handleSaveExpense = (e: React.FormEvent) => {
     e.preventDefault();
     if (!expenseForm.tipo.trim()) {
-      alert('Ingresa el tipo o nombre del gasto.');
+      toast.error('Ingresa el tipo o nombre del gasto.');
       return;
     }
 
@@ -1513,6 +1514,15 @@ export const MasterDataViewer: React.FC<MasterDataViewerProps> = ({
           </div>
 
           {/* Grid de Vehículos */}
+          {filteredFleet.length === 0 ? (
+            <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-2xl p-10 text-center">
+              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm border border-slate-200">
+                <Truck className="w-8 h-8 text-slate-400" />
+              </div>
+              <h4 className="text-lg font-bold text-slate-700">No se encontraron vehículos</h4>
+              <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">Verifica tus filtros de búsqueda o agrega un nuevo vehículo a la flota de la empresa.</p>
+            </div>
+          ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {filteredFleet.map((veh) => {
               const isNpr = veh.vehicleType === 'NPR';
@@ -1582,6 +1592,7 @@ export const MasterDataViewer: React.FC<MasterDataViewerProps> = ({
               );
             })}
           </div>
+          )}
         </div>
       )}
 
