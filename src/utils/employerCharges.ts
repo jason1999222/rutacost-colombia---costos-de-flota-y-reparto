@@ -1,3 +1,4 @@
+import { defaultLaborConfig } from '../data/laborDefaults';
 import { LaborConfig } from '../types/logistics';
 
 /**
@@ -71,8 +72,8 @@ export function isLoadedOvertimeRate(rate: number, ordinaryRate: number, surchar
  */
 export function computeEmployerCharges(input: EmployerChargesInput): EmployerChargesBreakdown {
   const labor = input.labor;
-  const smmlv = labor.smmlv || 1750905;
-  const monthlySalary = input.monthlySalary || labor.smmlv || 1750905;
+  const smmlv = labor.smmlv || defaultLaborConfig.smmlv;
+  const monthlySalary = input.monthlySalary || labor.smmlv || defaultLaborConfig.smmlv;
 
   // Base salarial (Art. 307 CST: el auxilio de transporte no es base de cesantías)
   const salariedBase = Math.max(0, input.salariedBase);

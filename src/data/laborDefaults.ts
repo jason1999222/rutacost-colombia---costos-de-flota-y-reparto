@@ -7,10 +7,10 @@ import { LaborConfig } from '../types/logistics';
  * fijados en la empresa ($17.488 diurna y $23.000 nocturna con factor prestacional)
  * y los porcentajes oficiales de seguridad social y parafiscales según el CST.
  */
-export const DEFAULT_LABOR_CONFIG: LaborConfig = {
+export const defaultLaborConfig: LaborConfig = {
   // Parámetros Base Legales Colombia 2026
-  smmlv: 1750905, // Salario mínimo mensual legal vigente 2026
-  auxilioTransporteLegal: 249095, // Auxilio de transporte legal obligatorio 2026
+  smmlv: 1750905,
+  auxilioTransporteLegal: 249095,
 
   // Tarifas Horarias Oficiales SCJ / CST 2026 (Hoja "VALOR RUTA" y "BASE DE DATOS PARA GASTOS")
   hourlyOrdinaryRate: 8000, // Hora ordinaria pactada SCJ: $8.000 COP
@@ -39,7 +39,8 @@ export const DEFAULT_LABOR_CONFIG: LaborConfig = {
 
   // Jornada de Trabajo Legal (Ley 2101 de 2021: 42 horas semanales a partir de julio 2026)
   standardHoursPerDay: 8.0, // 8 horas ordinarias de trabajo diaria
-  monthlyWorkingHours: 210, // Divisor legal oficial: (42h / 6d) * 30d = 210 horas / mes
+  monthlyWorkingHours: 210,
+
 
   // Recargos Horarios según Código Sustantivo del Trabajo (CST Art. 168 y 179)
   dayOvertimeSurcharge: 0.25, // Hora extra diurna ordinaria: +25%

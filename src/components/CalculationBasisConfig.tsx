@@ -1,3 +1,4 @@
+import { defaultLaborConfig } from '../data/laborDefaults';
 import React, { useState, useEffect } from 'react';
 import {
   Fuel,
@@ -141,7 +142,7 @@ export const CalculationBasisConfig: React.FC<CalculationBasisConfigProps> = ({
     setLaborForm(prev => {
       const next = { ...prev, ...updates };
 
-      const mHrs = Number(next.monthlyWorkingHours) || 210;
+      const mHrs = Number(next.monthlyWorkingHours) || defaultLaborConfig.monthlyWorkingHours;
       const dayExtFactor = 1 + (scheduleConfig.dayOvertimeSurchargeRate ?? 0.25);
       const nightExtFactor = 1 + (scheduleConfig.nightOvertimeSurchargeRate ?? 0.75);
       const nightOrdFactor = 1 + (scheduleConfig.nightSurchargeRate ?? 0.35);
@@ -243,7 +244,7 @@ export const CalculationBasisConfig: React.FC<CalculationBasisConfigProps> = ({
   };
 
   const handleMonthlyWorkingHoursChange = (hours: number) => {
-    const val = Number(hours) || 210;
+    const val = Number(hours) || defaultLaborConfig.monthlyWorkingHours;
     const updated: WorkScheduleConfig = {
       ...scheduleConfig,
       monthlyWorkingHours: val
@@ -359,18 +360,18 @@ export const CalculationBasisConfig: React.FC<CalculationBasisConfigProps> = ({
 
     // Auxiliar
     hasHelper: laborConfig.hasHelper !== undefined ? laborConfig.hasHelper : false,
-    helperSalary: laborConfig.helperSalary || 1750905,
-    helperHourlyOrdinaryRate: laborConfig.helperHourlyOrdinaryRate || Math.round((laborConfig.helperSalary || 1750905) / (laborConfig.monthlyWorkingHours || 210)),
-    helperOvertimeDayRate: laborConfig.helperOvertimeDayRate || Math.round(((laborConfig.helperSalary || 1750905) / (laborConfig.monthlyWorkingHours || 210)) * 1.25),
-    helperOvertimeNightRate: laborConfig.helperOvertimeNightRate || Math.round(((laborConfig.helperSalary || 1750905) / (laborConfig.monthlyWorkingHours || 210)) * 1.75),
+    helperSalary: laborConfig.helperSalary || defaultLaborConfig.smmlv,
+    helperHourlyOrdinaryRate: laborConfig.helperHourlyOrdinaryRate || Math.round((laborConfig.helperSalary || defaultLaborConfig.smmlv) / (laborConfig.monthlyWorkingHours || defaultLaborConfig.monthlyWorkingHours)),
+    helperOvertimeDayRate: laborConfig.helperOvertimeDayRate || Math.round(((laborConfig.helperSalary || defaultLaborConfig.smmlv) / (laborConfig.monthlyWorkingHours || defaultLaborConfig.monthlyWorkingHours)) * 1.25),
+    helperOvertimeNightRate: laborConfig.helperOvertimeNightRate || Math.round(((laborConfig.helperSalary || defaultLaborConfig.smmlv) / (laborConfig.monthlyWorkingHours || defaultLaborConfig.monthlyWorkingHours)) * 1.75),
     arlRiskLevelRateHelper: laborConfig.arlRiskLevelRateHelper || 0.02436,
 
     // Parámetros Legales Generales Colombia 2026 (Ley 2101 de 2021: 42h semanales -> 210h/mes)
-    smmlv: laborConfig.smmlv || 1750905,
-    auxilioTransporteLegal: laborConfig.auxilioTransporteLegal || 249095,
+    smmlv: laborConfig.smmlv || defaultLaborConfig.smmlv,
+    auxilioTransporteLegal: laborConfig.auxilioTransporteLegal || defaultLaborConfig.auxilioTransporteLegal,
     dailyViaticosPerPerson: laborConfig.dailyViaticosPerPerson || 50000,
     standardHoursPerDay: laborConfig.standardHoursPerDay || 8.0,
-    monthlyWorkingHours: laborConfig.monthlyWorkingHours === 240 ? 210 : (laborConfig.monthlyWorkingHours || 210),
+    monthlyWorkingHours: laborConfig.monthlyWorkingHours === 240 ? defaultLaborConfig.monthlyWorkingHours : (laborConfig.monthlyWorkingHours || defaultLaborConfig.monthlyWorkingHours),
     monthlyDotacionPerPerson: laborConfig.monthlyDotacionPerPerson || 65000,
 
     // Beneficio Tributario Ley 1607 / Art. 114-1 E.T. (Exoneración Salud 8.5%, SENA 2%, ICBF 3%)
@@ -402,16 +403,16 @@ export const CalculationBasisConfig: React.FC<CalculationBasisConfigProps> = ({
       hourlyOvertimeNightRate: laborConfig.hourlyOvertimeNightRate || 23000,
       arlRiskLevelRate: laborConfig.arlRiskLevelRate || 0.0435,
       hasHelper: laborConfig.hasHelper !== undefined ? laborConfig.hasHelper : false,
-      helperSalary: laborConfig.helperSalary || 1750905,
-      helperHourlyOrdinaryRate: laborConfig.helperHourlyOrdinaryRate || Math.round((laborConfig.helperSalary || 1750905) / (laborConfig.monthlyWorkingHours || 210)),
-      helperOvertimeDayRate: laborConfig.helperOvertimeDayRate || Math.round(((laborConfig.helperSalary || 1750905) / (laborConfig.monthlyWorkingHours || 210)) * 1.25),
-      helperOvertimeNightRate: laborConfig.helperOvertimeNightRate || Math.round(((laborConfig.helperSalary || 1750905) / (laborConfig.monthlyWorkingHours || 210)) * 1.75),
+      helperSalary: laborConfig.helperSalary || defaultLaborConfig.smmlv,
+      helperHourlyOrdinaryRate: laborConfig.helperHourlyOrdinaryRate || Math.round((laborConfig.helperSalary || defaultLaborConfig.smmlv) / (laborConfig.monthlyWorkingHours || defaultLaborConfig.monthlyWorkingHours)),
+      helperOvertimeDayRate: laborConfig.helperOvertimeDayRate || Math.round(((laborConfig.helperSalary || defaultLaborConfig.smmlv) / (laborConfig.monthlyWorkingHours || defaultLaborConfig.monthlyWorkingHours)) * 1.25),
+      helperOvertimeNightRate: laborConfig.helperOvertimeNightRate || Math.round(((laborConfig.helperSalary || defaultLaborConfig.smmlv) / (laborConfig.monthlyWorkingHours || defaultLaborConfig.monthlyWorkingHours)) * 1.75),
       arlRiskLevelRateHelper: laborConfig.arlRiskLevelRateHelper || 0.02436,
-      smmlv: laborConfig.smmlv || 1750905,
-      auxilioTransporteLegal: laborConfig.auxilioTransporteLegal || 249095,
+      smmlv: laborConfig.smmlv || defaultLaborConfig.smmlv,
+      auxilioTransporteLegal: laborConfig.auxilioTransporteLegal || defaultLaborConfig.auxilioTransporteLegal,
       dailyViaticosPerPerson: laborConfig.dailyViaticosPerPerson || 50000,
       standardHoursPerDay: laborConfig.standardHoursPerDay || 8.0,
-      monthlyWorkingHours: laborConfig.monthlyWorkingHours || 210,
+      monthlyWorkingHours: laborConfig.monthlyWorkingHours || defaultLaborConfig.monthlyWorkingHours,
       monthlyDotacionPerPerson: laborConfig.monthlyDotacionPerPerson || 65000,
       isTaxExemptLey1607: laborConfig.isTaxExemptLey1607 !== undefined ? laborConfig.isTaxExemptLey1607 : true,
       primaServiciosRate: laborConfig.primaServiciosRate || 0.0833,
@@ -448,7 +449,7 @@ export const CalculationBasisConfig: React.FC<CalculationBasisConfigProps> = ({
   };
 
   const handleAutoCalculateDriverHourly = () => {
-    const monthlyHrs = Number(laborForm.monthlyWorkingHours) || 210;
+    const monthlyHrs = Number(laborForm.monthlyWorkingHours) || defaultLaborConfig.monthlyWorkingHours;
     const baseOrd = Math.round(Number(laborForm.driverSalary) / monthlyHrs);
     const dayExtFactor = 1 + (scheduleConfig.dayOvertimeSurchargeRate ?? 0.25);
     const nightExtFactor = 1 + (scheduleConfig.nightOvertimeSurchargeRate ?? 0.75);
@@ -473,7 +474,7 @@ export const CalculationBasisConfig: React.FC<CalculationBasisConfigProps> = ({
   };
 
   const handleAutoCalculateHelperHourly = () => {
-    const monthlyHrs = Number(laborForm.monthlyWorkingHours) || 210;
+    const monthlyHrs = Number(laborForm.monthlyWorkingHours) || defaultLaborConfig.monthlyWorkingHours;
     const baseOrd = Math.round(Number(laborForm.helperSalary) / monthlyHrs);
     const dayExtFactor = 1 + (scheduleConfig.dayOvertimeSurchargeRate ?? 0.25);
     const nightExtFactor = 1 + (scheduleConfig.nightOvertimeSurchargeRate ?? 0.75);
@@ -489,16 +490,16 @@ export const CalculationBasisConfig: React.FC<CalculationBasisConfigProps> = ({
   };
 
   const handleApplySmmlv2026 = () => {
-    const monthlyHrs = Number(laborForm.monthlyWorkingHours) || 210;
-    const baseOrd = Math.round(1750905 / monthlyHrs);
+    const monthlyHrs = Number(laborForm.monthlyWorkingHours) || defaultLaborConfig.monthlyWorkingHours;
+    const baseOrd = Math.round(defaultLaborConfig.smmlv / monthlyHrs);
     const dayExtFactor = 1 + (scheduleConfig.dayOvertimeSurchargeRate ?? 0.25);
     const nightExtFactor = 1 + (scheduleConfig.nightOvertimeSurchargeRate ?? 0.75);
 
     updateLaborMultipleFields({
-      smmlv: 1750905,
-      auxilioTransporteLegal: 249095,
+      smmlv: defaultLaborConfig.smmlv,
+      auxilioTransporteLegal: defaultLaborConfig.auxilioTransporteLegal,
       monthlyWorkingHours: monthlyHrs,
-      helperSalary: 1750905,
+      helperSalary: defaultLaborConfig.helperSalary,
       helperHourlyOrdinaryRate: baseOrd,
       helperOvertimeDayRate: Math.round(baseOrd * dayExtFactor),
       helperOvertimeNightRate: Math.round(baseOrd * nightExtFactor)
@@ -753,9 +754,9 @@ export const CalculationBasisConfig: React.FC<CalculationBasisConfigProps> = ({
   const [testEndTime, setTestEndTime] = useState<string>('19:30');
 
   // --- CÁLCULO EN VIVO DE GASTOS FISCALES Y PRESTACIONALES (CST COLOMBIA) ---
-  const smmlvVal = Number(laborForm.smmlv) || 1750905;
-  const auxTransporteVal = Number(laborForm.auxilioTransporteLegal) || 249095;
-  const monthlyHoursVal = Number(laborForm.monthlyWorkingHours) || 210;
+  const smmlvVal = Number(laborForm.smmlv) || defaultLaborConfig.smmlv;
+  const auxTransporteVal = Number(laborForm.auxilioTransporteLegal) || defaultLaborConfig.auxilioTransporteLegal;
+  const monthlyHoursVal = Number(laborForm.monthlyWorkingHours) || defaultLaborConfig.monthlyWorkingHours;
 
   // 1. Conductor
   const driverSal = Number(laborForm.driverSalary) || 0;
@@ -831,7 +832,7 @@ export const CalculationBasisConfig: React.FC<CalculationBasisConfigProps> = ({
     laborForm.hourlyOvertimeDayRate || 17488,
     laborForm.hourlyOvertimeNightRate || 23000,
     scheduleConfig,
-    Number(laborForm.auxilioTransporteLegal) || 249095
+    Number(laborForm.auxilioTransporteLegal) || defaultLaborConfig.auxilioTransporteLegal
   );
 
   return (
@@ -1283,10 +1284,10 @@ export const CalculationBasisConfig: React.FC<CalculationBasisConfigProps> = ({
                   <div className="flex items-center gap-1.5 pt-0.5">
                     <button
                       type="button"
-                      onClick={() => handleMonthlyWorkingHoursChange(210)}
-                      className={`px-1.5 py-0.5 rounded text-[9px] font-bold border cursor-pointer ${laborForm.monthlyWorkingHours === 210 ? 'bg-blue-600 text-white border-blue-600' : 'bg-slate-50 text-slate-600 border-slate-200'}`}
+                      onClick={() => handleMonthlyWorkingHoursChange(defaultLaborConfig.monthlyWorkingHours)}
+                      className={`px-1.5 py-0.5 rounded text-[9px] font-bold border cursor-pointer ${laborForm.monthlyWorkingHours === defaultLaborConfig.monthlyWorkingHours ? 'bg-blue-600 text-white border-blue-600' : 'bg-slate-50 text-slate-600 border-slate-200'}`}
                     >
-                      210 h
+                      {defaultLaborConfig.monthlyWorkingHours} h
                     </button>
                     <button
                       type="button"
@@ -1619,7 +1620,7 @@ export const CalculationBasisConfig: React.FC<CalculationBasisConfigProps> = ({
                     type="button"
                     onClick={handleAutoCalculateDriverHourly}
                     className="flex-1 py-1.5 px-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg text-[11px] font-bold transition-colors text-center"
-                    title="Calcula H.O. dividiendo el sueldo entre las 210h mensuales legales"
+                    title="Calcula H.O. dividiendo el sueldo entre las {defaultLaborConfig.monthlyWorkingHours}h mensuales legales"
                   >
                     Auto-calcular por hora ({formatCOP(Math.round(driverSal / monthlyHoursVal))}/h)
                   </button>
@@ -1877,7 +1878,7 @@ export const CalculationBasisConfig: React.FC<CalculationBasisConfigProps> = ({
             const sunHolDayExtMult = 1 + (scheduleConfig.sundayHolidayOvertimeDayRate ?? 1.00);
             const sunHolNightExtMult = 1 + (scheduleConfig.sundayHolidayOvertimeNightRate ?? 1.50);
 
-            const monthlyDivisor = Number(laborForm.monthlyWorkingHours) || 210;
+            const monthlyDivisor = Number(laborForm.monthlyWorkingHours) || defaultLaborConfig.monthlyWorkingHours;
             const auxBaseHourly = Math.round(smmlvVal / monthlyDivisor);
             const driverBaseHourly = Math.round(driverSal / monthlyDivisor);
 
@@ -1922,7 +1923,7 @@ export const CalculationBasisConfig: React.FC<CalculationBasisConfigProps> = ({
                         <th className="py-2.5 px-2 text-center">Recargo Configurado</th>
                         <th className="py-2.5 px-2 text-center">Factor Multiplicador</th>
                         <th className="py-2.5 px-3 text-right text-emerald-800 bg-emerald-50/40">
-                          Auxiliar ({smmlvVal === 1750905 ? 'SMMLV $1.750.905' : formatCOP(smmlvVal)})
+                          Auxiliar ({smmlvVal === defaultLaborConfig.smmlv ? `SMMLV ${defaultLaborConfig.smmlv.toLocaleString("es-CO")}` : formatCOP(smmlvVal)})
                         </th>
                         <th className="py-2.5 px-3 text-right text-blue-800 bg-blue-50/40">
                           Conductor ({formatCOP(driverSal)})
@@ -3394,7 +3395,7 @@ export const CalculationBasisConfig: React.FC<CalculationBasisConfigProps> = ({
                   Liquidación Oficial de Turno de Ruta (CST & Ley 2101)
                 </span>
                 <span className="text-[11px] text-blue-700 font-medium">
-                  Duración Total: <strong className="font-mono">{testLaborBreakdown.totalHours} horas</strong> · Jornada base 42h (210h/mes)
+                  Duración Total: <strong className="font-mono">{testLaborBreakdown.totalHours} horas</strong> · Jornada base 42h ({defaultLaborConfig.monthlyWorkingHours}h/mes)
                 </span>
               </div>
               <div className="text-right">

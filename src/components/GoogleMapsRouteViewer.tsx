@@ -441,7 +441,7 @@ export const GoogleMapsRouteViewer: React.FC<GoogleMapsRouteViewerProps> = ({
 
   const apiKey = (customApiKey && customApiKey.trim().length > 0 && !customApiKey.includes('AIzaSyCpf'))
     ? customApiKey.trim()
-    : (import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "AIzaSyD_0CL3-5aCkUDyeVVTZCdNgHJ4Jp9_e-4");
+    : (import.meta.env.VITE_GOOGLE_MAPS_API_KEY );
 
   // Motor cartográfico: 'google' (Google Maps) o 'osm' (OpenStreetMap libre y seguro)
   const [mapEngine, setMapEngine] = useState<'google' | 'osm'>(() => {

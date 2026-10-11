@@ -1,3 +1,4 @@
+import { defaultLaborConfig } from './laborDefaults';
 /**
  * Calendario Oficial de Días Festivos de Colombia 2026 (Ley 51 de 1983 - Ley Emiliani)
  * y Motor de Cálculo de Horarios Laborales de Lunes a Sábado y Horas Extras
@@ -180,7 +181,7 @@ export const DEFAULT_WORK_SCHEDULE: WorkScheduleConfig = {
   sundayHolidayOvertimeDayRate: 1.00,
   sundayHolidayOvertimeNightRate: 1.50,
   weeklyTargetHours: 42,
-  monthlyWorkingHours: 210,
+  monthlyWorkingHours: defaultLaborConfig.monthlyWorkingHours,
   dailySchedules: [
     { dayOfWeek: 1, dayName: 'Lunes', shortName: 'Lun', isEnabled: true, startTime: '06:00', standardHours: 8, endTime: '14:00' },
     { dayOfWeek: 2, dayName: 'Martes', shortName: 'Mar', isEnabled: true, startTime: '06:00', standardHours: 8, endTime: '14:00' },
@@ -590,7 +591,7 @@ export function calculateTripLaborFromSchedule(
   hourlyDayExtRate: number = 10422,
   hourlyNightExtRate: number = 14591,
   schedule?: WorkScheduleConfig,
-  auxilioTransporteLegal: number = 249095
+  auxilioTransporteLegal: number = defaultLaborConfig.auxilioTransporteLegal
 ): CalculatedTripShiftBreakdown {
   const activeSchedule = schedule || getStoredWorkSchedule();
 
@@ -653,7 +654,7 @@ export function calculateTripLaborFromSchedule(
     sundayHolidayNightOvertimePayCOP;
 
   // Auxilio de Transporte Proporcional: $249.095 / 30 = $8.303,17 COP/día (base 8 horas)
-  const dailyAux = auxilioTransporteLegal > 0 ? (auxilioTransporteLegal / 30) : (249095 / 30);
+  const dailyAux = auxilioTransporteLegal > 0 ? (auxilioTransporteLegal / 30) : (defaultLaborConfig.auxilioTransporteLegal / 30);
   const auxilioTransporteTripCOP = Math.round(dailyAux * Math.max(1, totalHours / 8));
 
   const totalLaborCalculatedCOP =
@@ -730,7 +731,7 @@ export function calculateShiftEmployerCost(
     arlRate?: number;
   }
 ): ShiftEmployerCost {
-  const smmlv = labor.smmlv || 1750905;
+  const smmlv = labor.smmlv || defaultLaborConfig.smmlv;
 
   // Parte salarial del devengado (ordinarias + recargos ordinarios y festivos)
   const ordinaryPayCOP =

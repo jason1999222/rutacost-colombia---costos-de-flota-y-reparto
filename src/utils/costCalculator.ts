@@ -1,3 +1,4 @@
+import { defaultLaborConfig } from '../data/laborDefaults';
 import {
   DeliveryRoute,
   VehicleProfile,
@@ -196,7 +197,7 @@ export function calculateRouteCost(
   };
 
   if (helpersAssignedCount > 0) {
-    const helperHourly = labor.helperHourlyOrdinaryRate || ((labor.helperSalary || labor.smmlv) / (labor.monthlyWorkingHours || 210));
+    const helperHourly = labor.helperHourlyOrdinaryRate || ((labor.helperSalary || labor.smmlv) / (labor.monthlyWorkingHours || defaultLaborConfig.monthlyWorkingHours));
     const helperNightOrd = labor.helperHourlyNightRate || helperHourly * (1 + (labor.nightSurchargeRate ?? 0.35));
     const helperOvertimeDay = labor.helperOvertimeDayRate || (helperHourly * (1 + labor.dayOvertimeSurcharge));
     const helperOvertimeNight = labor.helperOvertimeNightRate || (helperHourly * (1 + labor.nightOvertimeSurcharge));

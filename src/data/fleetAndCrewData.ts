@@ -1,3 +1,4 @@
+import { defaultLaborConfig } from './laborDefaults';
 import { TripDispatch, FleetVehicleUnit } from '../types/logistics';
 
 export interface FleetVehicleResource {
@@ -278,7 +279,7 @@ export function getCustomStaff(): CrewMemberResource[] {
     hourlyOrdinaryRate: c.role === 'COORDINADOR' ? 11818 : 8000,
     hourlyOvertimeDayRate: c.role === 'COORDINADOR' ? 14773 : 17488,
     hourlyOvertimeNightRate: c.role === 'COORDINADOR' ? 20682 : 23000,
-    monthlyBaseSalary: c.monthlyBaseSalary || (c.role === 'COORDINADOR' ? 2600000 : 1750905),
+    monthlyBaseSalary: c.monthlyBaseSalary || (c.role === 'COORDINADOR' ? 2600000 : defaultLaborConfig.smmlv),
     status: 'ACTIVO' as const
   }));
 }
@@ -296,7 +297,7 @@ export function resetCustomStaff(): CrewMemberResource[] {
     hourlyOrdinaryRate: c.role === 'COORDINADOR' ? 11818 : 8000,
     hourlyOvertimeDayRate: c.role === 'COORDINADOR' ? 14773 : 17488,
     hourlyOvertimeNightRate: c.role === 'COORDINADOR' ? 20682 : 23000,
-    monthlyBaseSalary: c.monthlyBaseSalary || (c.role === 'COORDINADOR' ? 2600000 : 1750905),
+    monthlyBaseSalary: c.monthlyBaseSalary || (c.role === 'COORDINADOR' ? 2600000 : defaultLaborConfig.smmlv),
     status: 'ACTIVO' as const
   }));
   saveCustomStaff(defaults);

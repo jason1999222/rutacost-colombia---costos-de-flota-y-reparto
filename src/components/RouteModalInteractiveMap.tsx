@@ -124,8 +124,8 @@ export const RouteModalInteractiveMap: React.FC<RouteModalInteractiveMapProps> =
 
   // API Key de Google Maps
   const apiKey = typeof window !== 'undefined'
-    ? (localStorage.getItem('scj_google_maps_api_key') || (import.meta.env as any).VITE_GOOGLE_MAPS_API_KEY || "AIzaSyD_0CL3-5aCkUDyeVVTZCdNgHJ4Jp9_e-4")
-    : "AIzaSyD_0CL3-5aCkUDyeVVTZCdNgHJ4Jp9_e-4";
+    ? (localStorage.getItem('scj_google_maps_api_key') || (import.meta.env as any).VITE_GOOGLE_MAPS_API_KEY )
+    : "";
 
   // Sincronizar inputs locales con los nombres de las paradas
   useEffect(() => {

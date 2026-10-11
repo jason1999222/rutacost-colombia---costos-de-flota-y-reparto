@@ -1,3 +1,4 @@
+import { defaultLaborConfig } from '../data/laborDefaults';
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import {
   TripDispatch,
@@ -875,13 +876,13 @@ export const VehicleDispatchSettlement: React.FC<VehicleDispatchSettlementProps>
       laborConfig.hourlyOvertimeDayRate || 17488,
       laborConfig.hourlyOvertimeNightRate || 23000,
       activeSchedule,
-      laborConfig.auxilioTransporteLegal || 249095
+      laborConfig.auxilioTransporteLegal || defaultLaborConfig.auxilioTransporteLegal
     );
 
     let helperShiftLaborTotal = 0;
     const hasTripHelper = (dispatch.helpersCount && dispatch.helpersCount > 0) || laborConfig.hasHelper;
     if (hasTripHelper) {
-      const helperHourlyOrd = laborConfig.helperHourlyOrdinaryRate || Math.round((laborConfig.helperSalary || 1750905) / (laborConfig.monthlyWorkingHours || 210));
+      const helperHourlyOrd = laborConfig.helperHourlyOrdinaryRate || Math.round((laborConfig.helperSalary || defaultLaborConfig.smmlv) / (laborConfig.monthlyWorkingHours || defaultLaborConfig.monthlyWorkingHours));
       const helperDayExt = laborConfig.helperOvertimeDayRate || Math.round(helperHourlyOrd * (1 + (activeSchedule.dayOvertimeSurchargeRate ?? 0.25)));
       const helperNightExt = laborConfig.helperOvertimeNightRate || Math.round(helperHourlyOrd * (1 + (activeSchedule.nightOvertimeSurchargeRate ?? 0.75)));
       const helperShift = calculateTripLaborFromSchedule(
@@ -893,10 +894,10 @@ export const VehicleDispatchSettlement: React.FC<VehicleDispatchSettlementProps>
         helperDayExt,
         helperNightExt,
         activeSchedule,
-        laborConfig.auxilioTransporteLegal || 249095
+        laborConfig.auxilioTransporteLegal || defaultLaborConfig.auxilioTransporteLegal
       );
       helperShiftLaborTotal = calculateShiftEmployerCost(helperShift, laborConfig, {
-        monthlySalary: laborConfig.helperSalary || 1750905,
+        monthlySalary: laborConfig.helperSalary || defaultLaborConfig.smmlv,
         hourlyOrdRate: helperHourlyOrd,
         dayExtRate: helperDayExt,
         nightExtRate: helperNightExt,
@@ -1169,13 +1170,13 @@ export const VehicleDispatchSettlement: React.FC<VehicleDispatchSettlementProps>
       laborConfig.hourlyOvertimeDayRate || 17488,
       laborConfig.hourlyOvertimeNightRate || 23000,
       activeSchedule,
-      laborConfig.auxilioTransporteLegal || 249095
+      laborConfig.auxilioTransporteLegal || defaultLaborConfig.auxilioTransporteLegal
     );
 
     let helperShiftLaborTotal = 0;
     const hasTripHelper = (editDispatchForm.helpersCount && editDispatchForm.helpersCount > 0) || laborConfig.hasHelper;
     if (hasTripHelper) {
-      const helperHourlyOrd = laborConfig.helperHourlyOrdinaryRate || Math.round((laborConfig.helperSalary || 1750905) / (laborConfig.monthlyWorkingHours || 210));
+      const helperHourlyOrd = laborConfig.helperHourlyOrdinaryRate || Math.round((laborConfig.helperSalary || defaultLaborConfig.smmlv) / (laborConfig.monthlyWorkingHours || defaultLaborConfig.monthlyWorkingHours));
       const helperDayExt = laborConfig.helperOvertimeDayRate || Math.round(helperHourlyOrd * (1 + (activeSchedule.dayOvertimeSurchargeRate ?? 0.25)));
       const helperNightExt = laborConfig.helperOvertimeNightRate || Math.round(helperHourlyOrd * (1 + (activeSchedule.nightOvertimeSurchargeRate ?? 0.75)));
       const helperShift = calculateTripLaborFromSchedule(
@@ -1187,10 +1188,10 @@ export const VehicleDispatchSettlement: React.FC<VehicleDispatchSettlementProps>
         helperDayExt,
         helperNightExt,
         activeSchedule,
-        laborConfig.auxilioTransporteLegal || 249095
+        laborConfig.auxilioTransporteLegal || defaultLaborConfig.auxilioTransporteLegal
       );
       helperShiftLaborTotal = calculateShiftEmployerCost(helperShift, laborConfig, {
-        monthlySalary: laborConfig.helperSalary || 1750905,
+        monthlySalary: laborConfig.helperSalary || defaultLaborConfig.smmlv,
         hourlyOrdRate: helperHourlyOrd,
         dayExtRate: helperDayExt,
         nightExtRate: helperNightExt,
@@ -3553,13 +3554,13 @@ export const VehicleDispatchSettlement: React.FC<VehicleDispatchSettlementProps>
                   laborConfig.hourlyOvertimeDayRate || 17488,
                   laborConfig.hourlyOvertimeNightRate || 23000,
                   activeSchedule,
-                  laborConfig.auxilioTransporteLegal || 249095
+                  laborConfig.auxilioTransporteLegal || defaultLaborConfig.auxilioTransporteLegal
                 );
 
                 let helperLaborTotal = 0;
                 const hasTripHelper = (selectedDispatchForSettlement.helpersCount && selectedDispatchForSettlement.helpersCount > 0) || laborConfig.hasHelper;
                 if (hasTripHelper) {
-                  const helperHourlyOrd = laborConfig.helperHourlyOrdinaryRate || Math.round((laborConfig.helperSalary || 1750905) / (laborConfig.monthlyWorkingHours || 210));
+                  const helperHourlyOrd = laborConfig.helperHourlyOrdinaryRate || Math.round((laborConfig.helperSalary || defaultLaborConfig.smmlv) / (laborConfig.monthlyWorkingHours || defaultLaborConfig.monthlyWorkingHours));
                   const helperDayExt = laborConfig.helperOvertimeDayRate || Math.round(helperHourlyOrd * (1 + (activeSchedule.dayOvertimeSurchargeRate ?? 0.25)));
                   const helperNightExt = laborConfig.helperOvertimeNightRate || Math.round(helperHourlyOrd * (1 + (activeSchedule.nightOvertimeSurchargeRate ?? 0.75)));
                   const helperShift = calculateTripLaborFromSchedule(
@@ -3571,7 +3572,7 @@ export const VehicleDispatchSettlement: React.FC<VehicleDispatchSettlementProps>
                     helperDayExt,
                     helperNightExt,
                     activeSchedule,
-                    laborConfig.auxilioTransporteLegal || 249095
+                    laborConfig.auxilioTransporteLegal || defaultLaborConfig.auxilioTransporteLegal
                   );
                   helperLaborTotal = helperShift.totalLaborCalculatedCOP * (selectedDispatchForSettlement.helpersCount || 1);
                 }

@@ -35,7 +35,7 @@ import {
 } from '../data/fleetAndCrewData';
 
 export const DEFAULT_FIREBASE_CONFIG: FirebaseClientConfig = {
-  apiKey: "AIzaSyBqn7YzQcpD1gYws53GFuXbVUEb3uElRJM",
+  apiKey: "",
   authDomain: "app-empresarial-ffb59.firebaseapp.com",
   projectId: "app-empresarial-ffb59",
   storageBucket: "app-empresarial-ffb59.firebasestorage.app",

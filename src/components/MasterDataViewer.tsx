@@ -1,3 +1,4 @@
+import { defaultLaborConfig } from '../data/laborDefaults';
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import {
   DeliveryRoute,
@@ -64,6 +65,7 @@ import {
 } from '../services/firebase';
 import { useAuth } from '../context/AuthContext';
 import {
+
   Database,
   Truck,
   Users,
@@ -819,7 +821,7 @@ export const MasterDataViewer: React.FC<MasterDataViewerProps> = ({
 
   const handleStartEditStaff = (staff: CrewMemberResource) => {
     setEditingStaffId(staff.id);
-    const defSal = staff.role === 'COORDINADOR' ? 2600000 : (staff.role === 'AUXILIAR' ? (laborConfig.helperSalary || 1750905) : (laborConfig.driverSalary || 1750905));
+    const defSal = staff.role === 'COORDINADOR' ? 2600000 : (staff.role === 'AUXILIAR' ? (laborConfig.helperSalary || defaultLaborConfig.smmlv) : (laborConfig.driverSalary || defaultLaborConfig.smmlv));
     setStaffForm({
       name: staff.name,
       document: staff.document,
@@ -850,7 +852,7 @@ export const MasterDataViewer: React.FC<MasterDataViewerProps> = ({
     const ordRate = isHelper ? (laborConfig.helperHourlyOrdinaryRate || 8338) : (laborConfig.hourlyOrdinaryRate || 8000);
     const dayExt = isHelper ? (laborConfig.helperOvertimeDayRate || 10423) : (laborConfig.hourlyOvertimeDayRate || 17488);
     const nightExt = isHelper ? (laborConfig.helperOvertimeNightRate || 14592) : (laborConfig.hourlyOvertimeNightRate || 23000);
-    const baseSal = Number(staffForm.monthlyBaseSalary) || 1750905;
+    const baseSal = Number(staffForm.monthlyBaseSalary) || defaultLaborConfig.smmlv;
 
     if (editingStaffId) {
       updated = staffList.map(s => s.id === editingStaffId ? {
@@ -1694,7 +1696,7 @@ export const MasterDataViewer: React.FC<MasterDataViewerProps> = ({
                             <span className="font-mono font-bold text-slate-700">({formatCOP(activeHourly)}/h)</span>
                           </span>
                           <div className="text-[10px] text-slate-500 font-mono">
-                            Base: <strong className="text-slate-800">{formatCOP(worker.monthlyBaseSalary || (isHelper ? 1750905 : 1850000))}</strong>
+                            Base: <strong className="text-slate-800">{formatCOP(worker.monthlyBaseSalary || (isHelper ? defaultLaborConfig.smmlv : 1850000))}</strong>
                           </div>
                         </div>
                       </td>
@@ -2925,7 +2927,7 @@ export const MasterDataViewer: React.FC<MasterDataViewerProps> = ({
                     onChange={(e) => setStaffForm({ ...staffForm, hasTransportAllowance: e.target.value === 'true' })}
                     className="w-full p-2 border border-slate-300 rounded-lg font-bold text-slate-900 bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none"
                   >
-                    <option value="true">Sí Aplica (+{formatCOP(laborConfig.auxilioTransporteLegal || 249095)})</option>
+                    <option value="true">Sí Aplica (+{formatCOP(laborConfig.auxilioTransporteLegal || defaultLaborConfig.auxilioTransporteLegal)})</option>
                     <option value="false">No Aplica ($0)</option>
                   </select>
                 </div>
@@ -2970,13 +2972,13 @@ export const MasterDataViewer: React.FC<MasterDataViewerProps> = ({
 
               {/* Cálculo en Vivo del Costo Empresa y Valor Hora */}
               {(() => {
-                const base = Number(staffForm.monthlyBaseSalary) || 1750905;
-                const aux = staffForm.hasTransportAllowance ? Number(laborConfig.auxilioTransporteLegal || 249095) : 0;
+                const base = Number(staffForm.monthlyBaseSalary) || defaultLaborConfig.smmlv;
+                const aux = staffForm.hasTransportAllowance ? Number(laborConfig.auxilioTransporteLegal || defaultLaborConfig.auxilioTransporteLegal) : 0;
                 const arlPct = staffForm.arlRiskLevel === 'V' ? 0.0696 : staffForm.arlRiskLevel === 'IV' ? 0.0435 : staffForm.arlRiskLevel === 'III' ? 0.02436 : staffForm.arlRiskLevel === 'II' ? 0.01044 : 0.00522;
                 const ssPara = base * (0.12 + 0.085 + arlPct + 0.04 + 0.02 + 0.03);
                 const prest = (base + aux) * (0.0833 + 0.0833 + 0.01) + (base * 0.0417);
                 const totalEmp = Math.round(base + aux + ssPara + prest);
-                const valorHora = Math.round(totalEmp / (laborConfig.monthlyWorkingHours || 210));
+                const valorHora = Math.round(totalEmp / (laborConfig.monthlyWorkingHours || defaultLaborConfig.monthlyWorkingHours));
 
                 return (
                   <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-3.5 space-y-2">

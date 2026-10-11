@@ -1,3 +1,4 @@
+import { defaultLaborConfig } from './laborDefaults';
 
 export function isCurrentCalendarMonth(yearMonth: string): boolean {
   const now = new Date();
@@ -186,10 +187,10 @@ export function getMemberDefaultBaseSalary(member: CrewMemberResource, laborConf
     return 2600000; // Salario estándar de Coordinador de Despacho y Logística
   }
   if (cleanRole === 'AUXILIAR') {
-    return laborConfig.helperSalary || laborConfig.smmlv || 1750905;
+    return laborConfig.helperSalary || laborConfig.smmlv || defaultLaborConfig.smmlv;
   }
   // Conductor / Polifuncional
-  return laborConfig.driverSalary || laborConfig.smmlv || 1750905;
+  return laborConfig.driverSalary || laborConfig.smmlv || defaultLaborConfig.smmlv;
 }
 
 /**
@@ -233,14 +234,14 @@ export function getMemberHourlyRates(
 
   // Hora ordinaria de referencia del rol según la BD
   const roleOrdinary = isHelper
-    ? (laborConfig.helperHourlyOrdinaryRate || (laborConfig.helperSalary || laborConfig.smmlv || 1750905) / (laborConfig.monthlyWorkingHours || 210))
+    ? (laborConfig.helperHourlyOrdinaryRate || (laborConfig.helperSalary || laborConfig.smmlv || defaultLaborConfig.smmlv) / (laborConfig.monthlyWorkingHours || defaultLaborConfig.monthlyWorkingHours))
     : (laborConfig.hourlyOrdinaryRate || 8000);
 
   // Hora ordinaria efectiva de la persona (tarifa propia o derivada del salario)
   const ordinary = member.hourlyOrdinaryRate
     || (isDriver || isHelper
       ? roleOrdinary
-      : ((member.monthlyBaseSalary || laborConfig.smmlv || 1750905) / (laborConfig.monthlyWorkingHours || 210)));
+      : ((member.monthlyBaseSalary || laborConfig.smmlv || defaultLaborConfig.smmlv) / (laborConfig.monthlyWorkingHours || defaultLaborConfig.monthlyWorkingHours)));
   const scale = roleOrdinary > 0 ? ordinary / roleOrdinary : 1;
 
   // Tarifas de recargo de la BD (escaladas si la persona tiene tarifa propia)
@@ -323,9 +324,9 @@ export function calculateStaffMonthlyEmployerCost(
 
   // ===== MODO SIMPLE: estimación proporcional por días =====
   const days = Math.max(0, Math.min(30, Number(record.daysWorked) || 0));
-  const baseSalary = Number(record.monthlyBaseSalary) || 1750905;
-  const smmlv = laborConfig.smmlv || 1750905;
-  const auxLegal = laborConfig.auxilioTransporteLegal || 249095;
+  const baseSalary = Number(record.monthlyBaseSalary) || defaultLaborConfig.smmlv;
+  const smmlv = laborConfig.smmlv || defaultLaborConfig.smmlv;
+  const auxLegal = laborConfig.auxilioTransporteLegal || defaultLaborConfig.auxilioTransporteLegal;
 
   // 1. Sueldo Devengado
   const baseDevengado = Math.round((baseSalary / 30) * days);
@@ -414,9 +415,9 @@ function calculateMonthlyCostFromDailyEntries(
   allEntries: DailyAttendanceEntry[],
   tripsCount: number
 ): StaffMonthlyCostBreakdown {
-  const smmlv = laborConfig.smmlv || 1750905;
-  const auxLegal = laborConfig.auxilioTransporteLegal || 249095;
-  const baseSalary = Number(record.monthlyBaseSalary) || 1750905;
+  const smmlv = laborConfig.smmlv || defaultLaborConfig.smmlv;
+  const auxLegal = laborConfig.auxilioTransporteLegal || defaultLaborConfig.auxilioTransporteLegal;
+  const baseSalary = Number(record.monthlyBaseSalary) || defaultLaborConfig.smmlv;
   const schedule = getStoredWorkSchedule();
   const rates = getMemberHourlyRates(record, laborConfig);
 

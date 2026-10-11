@@ -3,7 +3,7 @@ import React, { useState, useMemo, lazy, Suspense } from 'react';
 import { DeliveryRoute, VehicleProfile, LaborConfig, RouteCostBreakdown, TripDispatch } from './types/logistics';
 import { INITIAL_ROUTES } from './data/initialRoutes';
 import { VEHICLE_PROFILES } from './data/vehicleProfiles';
-import { DEFAULT_LABOR_CONFIG } from './data/laborDefaults';
+import { defaultLaborConfig } from './data/laborDefaults';
 import { calculateRouteCost } from './utils/costCalculator';
 import { exportRoutesToCSV } from './utils/exportUtils';
 
@@ -93,11 +93,11 @@ export default function App() {
       try {
         const parsed = JSON.parse(saved);
         if (parsed && typeof parsed === 'object' && typeof parsed.hourlyOrdinaryRate === 'number' && parsed.hourlyOrdinaryRate > 0) {
-          return { ...DEFAULT_LABOR_CONFIG, ...parsed };
+          return { ...defaultLaborConfig, ...parsed };
         }
       } catch (e) {}
     }
-    return DEFAULT_LABOR_CONFIG;
+    return defaultLaborConfig;
   });
 
   // Escuchar actualizaciones globales de laborConfig

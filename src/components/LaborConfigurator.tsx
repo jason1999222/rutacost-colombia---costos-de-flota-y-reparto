@@ -40,10 +40,10 @@ export const LaborConfigurator: React.FC<LaborConfiguratorProps> = ({
   const handleApply2026Official = () => {
     const config2026: LaborConfig = {
       ...DEFAULT_LABOR_CONFIG,
-      smmlv: 1750905,
-      auxilioTransporteLegal: 249095,
+      smmlv: defaultLaborConfig.smmlv,
+      auxilioTransporteLegal: defaultLaborConfig.auxilioTransporteLegal,
       driverSalary: 2500000,
-      helperSalary: 1750905,
+      helperSalary: defaultLaborConfig.helperSalary,
       dailyViaticosPerPerson: 85000
     };
     onUpdateLaborConfig(config2026);
