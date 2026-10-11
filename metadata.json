@@ -1,0 +1,6 @@
+{
+  "name": "RutaCost Colombia - Costos de Flota y Reparto",
+  "description": "Calculadora financiera y operativa de costos de transporte de reparto en Colombia con bases SICE-TAC: nómina y parafiscales, mantenimiento por km, combustible, peajes y tiempos muertos.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

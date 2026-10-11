@@ -1,0 +1,3 @@
+(setvar "FILEDIA" 0)
+(command "_SAVEAS" "2018" "C:/Users/lenovo/Desktop/Vivienda_Unifamiliar_AutoCAD.dwg")
+(command "_QUIT" "_Y")
