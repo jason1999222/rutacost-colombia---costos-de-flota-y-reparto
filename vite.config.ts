@@ -3,9 +3,11 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
 
-export default defineConfig(() => {
+export default defineConfig(({ command }) => {
   return {
     plugins: [react(), tailwindcss()],
+
+    base: command === 'build' ? '/rutacost-colombia---costos-de-flota-y-reparto/' : '/',
 
     resolve: {
       alias: {
